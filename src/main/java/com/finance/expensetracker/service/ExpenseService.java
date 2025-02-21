@@ -39,6 +39,16 @@ public class ExpenseService {
                 "Expense not found with id: " + id));
     }
 
+    // Method to update an expense by its ID
+    public Expense updateExpense(Long id, ExpenseDTO expenseDTO) {
+        Expense expense = getExpenseById(id); // Retrieving the expense by its ID
+        expense.setDescription(expenseDTO.getDescription()); // Updating the description
+        expense.setAmount(expenseDTO.getAmount()); // Updating the amount
+        expense.setCategory(expenseDTO.getCategory()); // Updating the category
+        expense.setExpenseDate(expenseDTO.getExpenseDate()); // Updating the expense date
+        return expenseRepository.save(expense); // Saving the updated expense to the database
+    }
+
     // Method to delete an expense by its ID
     public void deleteExpense(Long id) {
         if (!expenseRepository.existsById(id)) {

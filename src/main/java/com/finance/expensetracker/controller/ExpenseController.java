@@ -19,21 +19,33 @@ public class ExpenseController {
     @Autowired
     private ExpenseService expenseService;
 
+    // CREATE
     @PostMapping // PostMapping annotation to specify that this method handles HTTP POST requests
     public ResponseEntity<Expense> createExpense(@Valid @RequestBody ExpenseDTO expenseDTO) {
         return new ResponseEntity<>(expenseService.createExpense(expenseDTO), HttpStatus.CREATED);
     }
 
+    // READ (all expenses)
     @GetMapping // GetMapping annotation to specify that this method handles HTTP GET requests
     public ResponseEntity<List<Expense>> getAllExpenses() {
         return ResponseEntity.ok(expenseService.getAllExpenses());
     }
 
+    // READ (by id - single expense)
     @GetMapping("/{id}") // GetMapping annotation to specify that this method handles HTTP GET requests
     public ResponseEntity<Expense> getExpenseById(@PathVariable Long id) {
         return ResponseEntity.ok(expenseService.getExpenseById(id));
     }
 
+    // UPDATE
+    @PutMapping("/{id}")
+    public ResponseEntity<Expense> updateExpense(
+            @PathVariable Long id, 
+            @Valid @RequestBody ExpenseDTO expenseDTO) {
+        return ResponseEntity.ok(expenseService.updateExpense(id, expenseDTO));
+    }
+
+    // DELETE (by id - single expense)
     @DeleteMapping("/{id}") // DeleteMapping annotation to specify that this method handles HTTP DELETE requests
     public ResponseEntity<Void> deleteExpense(@PathVariable Long id) {
         expenseService.deleteExpense(id);
