@@ -31,13 +31,13 @@ public class ExpenseController {
         return ResponseEntity.ok(expenseService.getAllExpenses());
     }
 
-    // READ (by id - single expense)
+    // READ (single expense)
     @GetMapping("/{id}") // GetMapping annotation to specify that this method handles HTTP GET requests
     public ResponseEntity<Expense> getExpenseById(@PathVariable Long id) {
         return ResponseEntity.ok(expenseService.getExpenseById(id));
     }
 
-    // UPDATE
+    // UPDATE (single expense)
     @PutMapping("/{id}")
     public ResponseEntity<Expense> updateExpense(
             @PathVariable Long id, 
@@ -45,7 +45,7 @@ public class ExpenseController {
         return ResponseEntity.ok(expenseService.updateExpense(id, expenseDTO));
     }
 
-    // DELETE (by id - single expense)
+    // DELETE (single expense)
     @DeleteMapping("/{id}") // DeleteMapping annotation to specify that this method handles HTTP DELETE requests
     public ResponseEntity<Void> deleteExpense(@PathVariable Long id) {
         expenseService.deleteExpense(id);

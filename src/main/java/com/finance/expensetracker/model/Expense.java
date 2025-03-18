@@ -31,6 +31,10 @@ public class Expense {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @ManyToOne (fetch = FetchType.LAZY) // Many expenses can be associated with one user; lazy loading to fetch user details only when needed
+    @JoinColumn(name = "user_id", nullable = false) 
+    private User user; // User entity to match the expense to a specific user
+
     // Automatically sets the createdAt field to the current date and time when the expense is created
     @PrePersist
     public void prePersist() {
