@@ -12,9 +12,9 @@
             <div class="row align-items-center">
                 <div class="col-lg-7">
                     <h1 class="display-4">Take Control of Your Finances</h1>
-                    <p class="lead">Track expenses, manage budgets, and achieve your financial goals with our easy-to-use expense tracker.</p>
+                    <p class="lead">Track expenses, manage budgets, and achieve your financial goals with FinTrack, an easy-to-use expense tracker.</p>
                     <hr class="my-4">
-                    <p>Join thousands of users who have transformed their financial habits with our platform.</p>
+                    <p>Join today and take the first step towards financial clarity.</p>
                     <div sec:authorize="!isAuthenticated()">
                         <a class="btn btn-primary btn-lg me-2" href="/register" role="button">
                             <i class="fas fa-user-plus me-2"></i>Get Started for Free
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5 mt-4 mt-lg-0 d-none d-lg-block">
-                    <img src="https://placehold.co/600x400?text=Track+Your+Expenses" class="img-fluid rounded shadow" alt="Expense Tracking">
+                    <img th:src="@{/images/expensetracker_icon.png}" alt="Expense Tracking">
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
                             <i class="fas fa-lock fa-3x text-primary"></i>
                         </div>
                         <h5 class="card-title">Secure Platform</h5>
-                        <p class="card-text">Your financial data is encrypted and protected with the highest security standards.</p>
+                        <p class="card-text">Your expenses are protected and stored securely using the latest encryption technologies.</p>
                     </div>
                 </div>
             </div>
@@ -79,76 +79,7 @@
         </div>
     </div>
     
-    <!-- Testimonials Section -->
-    <div class="container my-5">
-        <div class="p-5 bg-light rounded">
-            <h2 class="text-center mb-4">What Our Users Say</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <i class="fas fa-quote-left text-primary"></i>
-                                <p class="card-text">This expense tracker has completely transformed how I manage my finances. I can finally see where my money goes each month!</p>
-                                <i class="fas fa-quote-right text-primary float-end"></i>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <div class="me-3">
-                                    <i class="fas fa-user-circle fa-3x text-secondary"></i>
-                                </div>
-                                <div>
-                                    <h6 class="mb-0">Sarah Johnson</h6>
-                                    <small class="text-muted">Marketing Professional</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <i class="fas fa-quote-left text-primary"></i>
-                                <p class="card-text">I've tried many expense tracking apps, but this one stands out with its intuitive interface and comprehensive reporting.</p>
-                                <i class="fas fa-quote-right text-primary float-end"></i>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <div class="me-3">
-                                    <i class="fas fa-user-circle fa-3x text-secondary"></i>
-                                </div>
-                                <div>
-                                    <h6 class="mb-0">Michael Rodriguez</h6>
-                                    <small class="text-muted">Small Business Owner</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <i class="fas fa-quote-left text-primary"></i>
-                                <p class="card-text">As a student, this free expense tracker has been a game-changer for managing my limited budget. Highly recommended!</p>
-                                <i class="fas fa-quote-right text-primary float-end"></i>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <div class="me-3">
-                                    <i class="fas fa-user-circle fa-3x text-secondary"></i>
-                                </div>
-                                <div>
-                                    <h6 class="mb-0">Jessica Lee</h6>
-                                    <small class="text-muted">Graduate Student</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- CTA Section -->
+    <!-- Call to Action (CTA)Section -->
     <div class="container my-5">
         <div class="p-5 text-center text-white rounded" style="background: linear-gradient(135deg, var(--primary-color), var(--dark-color))">
             <h2>Ready to Start Tracking?</h2>

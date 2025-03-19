@@ -19,7 +19,7 @@
 <body>
     <nav th:fragment="nav" class="navbar navbar-expand-lg navbar-dark navbar-custom">
         <div class="container">
-            <a class="navbar-brand" href="/"><i class="fas fa-wallet me-2"></i>Expense Tracker</a>
+            <a class="navbar-brand" href="/"><i class="fas fa-wallet me-2"></i>FinTrack</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -61,22 +61,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <h5><i class="fas fa-wallet me-2"></i>Expense Tracker</h5>
+                    <h5><i class="fas fa-wallet me-2"></i>FinTrack</h5>
                     <p class="small">Manage your finances with ease and precision.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <ul class="list-inline mb-0">
-                        <li class="list-inline-item me-3">
-                            <a href="#"><i class="fab fa-github fa-lg"></i></a>
-                        </li>
-                        <li class="list-inline-item me-3">
-                            <a href="#"><i class="fab fa-linkedin fa-lg"></i></a>
-                        </li>
                         <li class="list-inline-item">
-                            <a href="#"><i class="fab fa-twitter fa-lg"></i></a>
+                            <a href="https://github.com/anish-siv/Spring-Boot-Expense-Tracker" target="_blank"><i class="fab fa-github fa-lg"></i> View on GitHub</a>
                         </li>
                     </ul>
-                    <p class="small mt-2">&copy; 2025 Expense Tracker. All rights reserved.</p>
+                    <p class="small mt-2">&copy; 2025 FinTrack - A Portfolio Project by Anish Sivakumar</p>
                 </div>
             </div>
         </div>
@@ -84,9 +78,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Custom JS -->
         <script>
-            // Add any custom JavaScript here
+            //  Any custom JavaScript goes here
             document.addEventListener('DOMContentLoaded', function() {
-                // Highlight active nav item
+                // Highlighting the active nav item
                 const currentLocation = window.location.pathname;
                 const navLinks = document.querySelectorAll('.nav-link');
                 navLinks.forEach(link => {
