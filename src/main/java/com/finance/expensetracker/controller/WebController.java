@@ -6,8 +6,6 @@ import com.finance.expensetracker.model.User;
 import com.finance.expensetracker.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -107,7 +105,7 @@ public class WebController {
     private String prepareExpensesModel(Model model, List<Expense> expenses) {
         model.addAttribute("expenses", expenses);
         
-        // Calculate totals
+        // Calculating totals
         if (!expenses.isEmpty()) {
             // Total of all expenses
             BigDecimal totalAmount = new BigDecimal(0);
