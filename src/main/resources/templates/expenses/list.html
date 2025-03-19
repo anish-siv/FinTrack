@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('My Expenses - Expense Tracker')">
+</head>
+<body>
+    <nav th:replace="fragments/layout :: nav"></nav>
+    
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-list-alt me-2"></i>My Expenses</h2>
+            <a href="/expenses/add" class="btn btn-primary">
+                <i class="fas fa-plus-circle me-2"></i>Add New Expense
+            </a>
+        </div>
+        
+        <!-- Dashboard Cards -->
+        <div class="row mb-4" th:unless="${expenses.empty}">
+            <div class="col-md-4">
+                <div class="dashboard-card total">
+                    <p class="card-title">Total Expenses</p>
+                    <h3 class="card-value">$<span th:text="${totalAmount != null ? totalAmount : '0.00'}">0.00</span></h3>
+                    <p><i class="fas fa-coins me-1"></i> Total spending</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dashboard-card monthly">
+                    <p class="card-title">This Month</p>
+                    <h3 class="card-value">$<span th:text="${monthlyAmount != null ? monthlyAmount : '0.00'}">0.00</span></h3>
+                    <p><i class="fas fa-calendar-alt me-1"></i> Current month</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dashboard-card daily">
+                    <p class="card-title">Last 7 Days</p>
+                    <h3 class="card-value">$<span th:text="${weeklyAmount != null ? weeklyAmount : '0.00'}">0.00</span></h3>
+                    <p><i class="fas fa-clock me-1"></i> Recent spending</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filter options -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-filter me-2"></i>Filter Expenses</h5>
+                <form class="row g-3" th:action="@{/expenses/filter}" method="get">
+                    <div class="col-md-4">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-control" id="category" name="category">
+                            <option value="">All Categories</option>
+                            <option value="Food" th:selected="${param.category != null && param.category[0] == 'Food'}">Food</option>
+                            <option value="Transportation" th:selected="${param.category != null && param.category[0] == 'Transportation'}">Transportation</option>
+                            <option value="Entertainment" th:selected="${param.category != null && param.category[0] == 'Entertainment'}">Entertainment</option>
+                            <option value="Utilities" th:selected="${param.category != null && param.category[0] == 'Utilities'}">Utilities</option>
+                            <option value="Housing" th:selected="${param.category != null && param.category[0] == 'Housing'}">Housing</option>
+                            <option value="Healthcare" th:selected="${param.category != null && param.category[0] == 'Healthcare'}">Healthcare</option>
+                            <option value="Shopping" th:selected="${param.category != null && param.category[0] == 'Shopping'}">Shopping</option>
+                            <option value="Other" th:selected="${param.category != null && param.category[0] == 'Other'}">Other</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="dateFrom" class="form-label">From Date</label>
+                        <input type="date" class="form-control" id="dateFrom" name="dateFrom" th:value="${param.dateFrom != null ? param.dateFrom[0] : ''}">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="dateTo" class="form-label">To Date</label>
+                        <input type="date" class="form-control" id="dateTo" name="dateTo" th:value="${param.dateTo != null ? param.dateTo[0] : ''}">
+                    </div>
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search me-2"></i>Apply Filters
+                        </button>
+                        <a th:href="@{/expenses}" class="btn btn-outline-secondary">
+                            <i class="fas fa-undo me-2"></i>Reset
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div th:if="${expenses.empty}" class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>You don't have any expenses yet. Click "Add New Expense" to get started.
+        </div>
+        
+        <div th:if="${filterMessage != null}" class="alert alert-primary mb-4">
+            <i class="fas fa-filter me-2"></i><span th:text="${filterMessage}">Filtered expenses</span>
+        </div>
+        
+        <div th:unless="${expenses.empty}" class="card">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">
+                                    <i class="fas fa-file-alt me-1"></i> Description
+                                </th>
+                                <th scope="col">
+                                    <i class="fas fa-dollar-sign me-1"></i> Amount
+                                </th>
+                                <th scope="col">
+                                    <i class="fas fa-tag me-1"></i> Category
+                                </th>
+                                <th scope="col">
+                                    <i class="fas fa-calendar me-1"></i> Date
+                                </th>
+                                <th scope="col">
+                                    <i class="fas fa-cogs me-1"></i> Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="expense : ${expenses}">
+                                <td th:text="${expense.description}"></td>
+                                <td class="expense-amount" th:text="${'$' + expense.amount}"></td>
+                                <td>
+                                    <span th:class="${'badge rounded-pill ' + 
+                                        (expense.category == 'Food' ? 'bg-success' : 
+                                        (expense.category == 'Transportation' ? 'bg-info' : 
+                                        (expense.category == 'Entertainment' ? 'bg-warning' : 
+                                        (expense.category == 'Utilities' ? 'bg-primary' : 'bg-secondary'))))}">
+                                        <i th:class="${'me-1 fas ' + 
+                                            (expense.category == 'Food' ? 'fa-utensils' : 
+                                            (expense.category == 'Transportation' ? 'fa-car' : 
+                                            (expense.category == 'Entertainment' ? 'fa-film' : 
+                                            (expense.category == 'Utilities' ? 'fa-bolt' : 'fa-tag'))))}"></i>
+                                        <span th:text="${expense.category}"></span>
+                                    </span>
+                                </td>
+                                <td th:text="${#temporals.format(expense.expenseDate, 'MMM dd, yyyy')}"></td>
+                                <td>
+                                    <a th:href="@{/expenses/edit/{id}(id=${expense.id})}" class="btn btn-sm btn-warning me-1">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a th:href="@{/expenses/delete/{id}(id=${expense.id})}" class="btn btn-sm btn-danger" 
+                                       onclick="return confirm('Are you sure you want to delete this expense?')">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Pagination -->
+            <div class="card-footer d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="text-muted">Showing <span th:text="${expenses.size()}"></span> expenses</span>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination mb-0">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html> 
