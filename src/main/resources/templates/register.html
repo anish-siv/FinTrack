@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Register - Expense Tracker')">
+</head>
+<body>
+    <nav th:replace="fragments/layout :: nav"></nav>
+    
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h4 class="mb-0"><i class="fas fa-user-plus me-2"></i>Create New Account</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-muted mb-4">Join thousands of users managing their expenses effortlessly.</p>
+                        
+                        <form th:action="@{/api/auth/register-web}" method="post" th:object="${user}">
+                            <!-- Full Name input -->
+                            <div class="mb-4">
+                                <label for="fullName" class="form-label">
+                                    <i class="fas fa-user me-2"></i>Full Name
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-id-card"></i></span>
+                                    <input type="text" th:field="*{fullName}" 
+                                           class="form-control" placeholder="Enter your full name" required>
+                                </div>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+                            </div>
+                            
+                            <!-- Email/Username input -->
+                            <div class="mb-4">
+                                <label for="username" class="form-label">
+                                    <i class="fas fa-envelope me-2"></i>Email Address
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-at"></i></span>
+                                    <input type="email" th:field="*{username}" 
+                                           class="form-control" placeholder="Enter your email address" required>
+                                </div>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                                <div class="form-text">Your email will be your username for logging in</div>
+                            </div>
+                            
+                            <!-- Password input -->
+                            <div class="mb-4">
+                                <label for="password" class="form-label">
+                                    <i class="fas fa-lock me-2"></i>Password
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-key"></i></span>
+                                    <input type="password" th:field="*{password}" 
+                                           class="form-control" placeholder="Create a strong password" required>
+                                </div>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                                <div class="form-text">Use at least 8 characters with a mix of letters, numbers & symbols</div>
+                            </div>
+                            
+                            <!-- Terms and conditions -->
+                            <div class="mb-4 form-check">
+                                <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                                <label class="form-check-label" for="termsCheck">
+                                    I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
+                                </label>
+                            </div>
+                            
+                            <!-- Submit button -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary py-2">
+                                    <i class="fas fa-user-plus me-2"></i>Create Account
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-4 text-center">
+                            <p>Already have an account? <a th:href="@{/login}" class="text-decoration-none fw-bold">Login Here</a></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Benefits Card -->
+                <div class="card mt-4 border-0 bg-light">
+                    <div class="card-body">
+                        <h6 class="mb-3"><i class="fas fa-star text-warning me-2"></i>Benefits of Registration</h6>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Track all your expenses</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Categorize spending</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Generate reports</li>
+                                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Secure data storage</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html> 

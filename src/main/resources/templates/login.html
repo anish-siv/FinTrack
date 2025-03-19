@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Login - Expense Tracker')">
+</head>
+<body>
+    <nav th:replace="fragments/layout :: nav"></nav>
+    
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h4 class="mb-0"><i class="fas fa-sign-in-alt me-2"></i>Login to Your Account</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div th:if="${param.error}" class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle me-2"></i>Invalid username or password.
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i>You have been logged out successfully.
+                        </div>
+                        
+                        <p class="text-muted mb-4">Please enter your credentials to access your expense dashboard.</p>
+                        
+                        <form th:action="@{/api/auth/login}" method="post">
+                            <!-- Username input -->
+                            <div class="mb-4">
+                                <label for="username" class="form-label">
+                                    <i class="fas fa-envelope me-2"></i>Email/Username
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-user"></i></span>
+                                    <input type="text" id="username" name="username" 
+                                           class="form-control" placeholder="Enter your email" required autofocus>
+                                </div>
+                            </div>
+                            
+                            <!-- Password input -->
+                            <div class="mb-4">
+                                <label for="password" class="form-label">
+                                    <i class="fas fa-lock me-2"></i>Password
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fas fa-key"></i></span>
+                                    <input type="password" id="password" name="password" 
+                                           class="form-control" placeholder="Enter your password" required>
+                                </div>
+                                <div class="form-text text-end">
+                                    <a href="#" class="text-decoration-none">Forgot password?</a>
+                                </div>
+                            </div>
+                            
+                            <!-- Remember me -->
+                            <div class="mb-4 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+                            
+                            <!-- Submit button -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary py-2">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-4 text-center">
+                            <p>Don't have an account? <a th:href="@{/register}" class="text-decoration-none fw-bold">Register Now</a></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Security Notice -->
+                <div class="card mt-4 border-0 bg-light">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-shield-alt text-primary fa-2x me-3"></i>
+                            <div>
+                                <h6 class="mb-1">Secure Login</h6>
+                                <p class="mb-0 small text-muted">Your connection to this site is encrypted and your information is kept private.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html> 
