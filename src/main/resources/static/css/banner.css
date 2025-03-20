@@ -1,0 +1,93 @@
+.banner-container {
+    width: 1280px;
+    height: 400px;
+    background: linear-gradient(135deg, #3f51b5, #5c6bc0);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+    color: white;
+    width: 60%;
+}
+
+.banner-title {
+    font-size: 60px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.banner-subtitle {
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    font-family: 'Roboto', sans-serif;
+}
+
+.banner-shapes {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.banner-shape {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.shape-1 {
+    width: 300px;
+    height: 300px;
+    top: -100px;
+    right: -50px;
+}
+
+.shape-2 {
+    width: 200px;
+    height: 200px;
+    bottom: 50px;
+    right: 100px;
+}
+
+.banner-icon {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.icon-1 {
+    width: 80px;
+    height: 80px;
+    top: 80px;
+    right: 180px;
+}
+
+.icon-2 {
+    width: 60px;
+    height: 60px;
+    bottom: 100px;
+    right: 50px;
+}
+
+.icon-3 {
+    width: 70px;
+    height: 70px;
+    top: 200px;
+    right: 280px;
+} 

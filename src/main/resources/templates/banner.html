@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinTrack Banner</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/banner.css}">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner-container">
+        <div class="banner-content">
+            <div class="banner-title">FinTrack</div>
+            <div class="banner-subtitle">Take control of your finances with our simple expense tracking solution</div>
+        </div>
+        
+        <div class="banner-shapes">
+            <div class="banner-shape shape-1"></div>
+            <div class="banner-shape shape-2"></div>
+            
+            <div class="banner-icon icon-1">
+                <i class="fas fa-wallet fa-2x" style="color: #3f51b5;"></i>
+            </div>
+            <div class="banner-icon icon-2">
+                <i class="fas fa-chart-line fa-2x" style="color: #f50057;"></i>
+            </div>
+            <div class="banner-icon icon-3">
+                <i class="fas fa-coins fa-2x" style="color: #ff9800;"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // This script will take a screenshot of the banner
+        document.addEventListener('DOMContentLoaded', function() {
+            alert('To capture this banner as an image, you can: \n\n1. Take a screenshot (using your OS screenshot tool)\n2. Use browser developer tools to take a screenshot\n3. Use a browser extension like "Full Page Screen Capture"');
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Edit Expense - Expense Tracker')">
+</head>
+<body>
+    <nav th:replace="fragments/layout :: nav"></nav>
+    
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4><i class="fas fa-edit me-2"></i>Edit Expense</h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/expenses/edit/{id}(id=${expenseId})}" method="post" th:object="${expense}">
+                            <!-- Description input with icon -->
+                            <div class="mb-4">
+                                <label for="description" class="form-label">
+                                    <i class="fas fa-file-alt me-2"></i>Description
+                                </label>
+                                <input type="text" th:field="*{description}" class="form-control" 
+                                       placeholder="e.g., Grocery shopping at Walmart" required>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                                <div class="form-text">Briefly describe what this expense was for</div>
+                            </div>
+                            
+                            <!-- Amount input with icon -->
+                            <div class="mb-4">
+                                <label for="amount" class="form-label">
+                                    <i class="fas fa-dollar-sign me-2"></i>Amount
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" th:field="*{amount}" class="form-control" 
+                                           step="0.01" min="0.01" placeholder="0.00" required>
+                                </div>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
+                                <div class="form-text">Enter the amount spent (minimum $0.01)</div>
+                            </div>
+                            
+                            <!-- Category selection with icons -->
+                            <div class="mb-4">
+                                <label for="category" class="form-label">
+                                    <i class="fas fa-tag me-2"></i>Category
+                                </label>
+                                <select th:field="*{category}" class="form-select" required>
+                                    <option value="">Select a category</option>
+                                    <option value="Food">🍔 Food</option>
+                                    <option value="Transportation">🚗 Transportation</option>
+                                    <option value="Housing">🏠 Housing</option>
+                                    <option value="Entertainment">🎬 Entertainment</option>
+                                    <option value="Utilities">💡 Utilities</option>
+                                    <option value="Healthcare">⚕️ Healthcare</option>
+                                    <option value="Shopping">🛍️ Shopping</option>
+                                    <option value="Other">📦 Other</option>
+                                </select>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+                                <div class="form-text">Categorizing expenses helps with budget analysis</div>
+                            </div>
+                            
+                            <!-- Date input with icon -->
+                            <div class="mb-4">
+                                <label for="expenseDate" class="form-label">
+                                    <i class="fas fa-calendar me-2"></i>Date
+                                </label>
+                                <input type="datetime-local" th:field="*{expenseDate}" class="form-control" required>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('expenseDate')}" th:errors="*{expenseDate}"></div>
+                                <div class="form-text">When was this expense incurred?</div>
+                            </div>
+                            
+                            <!-- Optional notes -->
+                            <div class="mb-4">
+                                <label for="notes" class="form-label">
+                                    <i class="fas fa-sticky-note me-2"></i>Notes (Optional)
+                                </label>
+                                <textarea class="form-control" id="notes" rows="3" 
+                                          placeholder="Additional details about this expense..."></textarea>
+                                <div class="form-text">Add any additional information about this expense</div>
+                            </div>
+                            
+                            <!-- Action buttons -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a th:href="@{/expenses}" class="btn btn-outline-secondary me-md-2">
+                                    <i class="fas fa-times me-1"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <i class="fas fa-save me-1"></i>Update Expense
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html> 
