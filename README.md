@@ -63,12 +63,21 @@ A full-featured web application for tracking personal expenses built with Spring
 
 2. **Configure database**
    - Create MySQL database named `expense_tracker`
-   - Update database configuration in `src/main/resources/application.properties` if needed:
+   - Copy the sample properties file and update with your credentials:
+     ```bash
+     cp src/main/resources/application.properties.sample src/main/resources/application.properties
+     ```
+   - Update database configuration in `src/main/resources/application.properties`:
      ```properties
-     spring.datasource.url=jdbc:mysql://localhost:3306/expense_tracker
      spring.datasource.username=your_username
      spring.datasource.password=your_password
      ```
+   - For production environments, it's recommended to use environment variables instead:
+     ```properties
+     spring.datasource.username=${DB_USERNAME}
+     spring.datasource.password=${DB_PASSWORD}
+     ```
+     And set these environment variables in your system or deployment platform.
 
 3. **Build and run the application**
    ```bash
