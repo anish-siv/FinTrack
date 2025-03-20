@@ -113,11 +113,11 @@ A full-featured web application for tracking personal expenses built with Spring
 ```
 src/main/java/com/finance/expensetracker/
 ├── controller/     # HTTP request handlers
+├── dto/            # Data Transfer Objects
 ├── model/          # Entity definitions
 ├── repository/     # Data access interfaces
-├── service/        # Business logic implementation
 ├── security/       # Security configuration
-└── dto/            # Data Transfer Objects
+└── service/        # Business logic implementation
 ```
 
 ## Future Enhancements
