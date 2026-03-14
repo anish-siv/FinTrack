@@ -1,19 +1,30 @@
 spring.application.name=expensetracker
 
-# Database Configuration
+# -------------------------------------------------------
+# MySQL Database Configuration (for persistent storage)
+# -------------------------------------------------------
+# 1. Install MySQL 8.0+
+# 2. Create the database:  CREATE DATABASE expense_tracker;
+# 3. Replace YOUR_USERNAME and YOUR_PASSWORD below
+# -------------------------------------------------------
 spring.datasource.url=jdbc:mysql://localhost:3306/expense_tracker
 spring.datasource.username=YOUR_USERNAME
 spring.datasource.password=YOUR_PASSWORD
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 # JPA/Hibernate Configuration
-spring.jpa.hibernate.ddl-auto=create-drop
+# Use "update" to preserve data across restarts.
+# Use "create-drop" only for initial development (drops all data on restart).
+spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+
+# Disable H2 console when using MySQL
+spring.h2.console.enabled=false
 
 # Server Configuration
 server.port=8095
 
 spring.main.allow-circular-references=true
-logging.level.org.springframework.security=DEBUG 
+logging.level.org.springframework.security=DEBUG
