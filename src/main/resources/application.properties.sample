@@ -28,3 +28,6 @@ server.port=8095
 
 spring.main.allow-circular-references=true
 logging.level.org.springframework.security=DEBUG
+
+# Anthropic Claude API Key
+anthropic.api.key=YOUR_API_KEY_HERE

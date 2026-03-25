@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head('Budgets - FinTrack')">
+</head>
+<body>
+    <nav th:replace="fragments/layout :: nav"></nav>
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-piggy-bank me-2"></i>Monthly Budgets
+                <small class="text-muted fs-5 ms-2" th:text="${currentMonthName + ' ' + currentYear}"></small>
+            </h2>
+            <a href="/expenses" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i>Back to Expenses
+            </a>
+        </div>
+
+        <!-- Success/Error messages -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i><span th:text="${successMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i><span th:text="${errorMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div class="row">
+            <!-- Set Budget Form -->
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-plus-circle me-2"></i>Set Budget
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/expenses/budgets/save}" th:object="${budgetDTO}" method="post">
+                            <input type="hidden" th:field="*{month}" />
+                            <input type="hidden" th:field="*{year}" />
+
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Category</label>
+                                <select class="form-select" id="category" th:field="*{category}">
+                                    <option value="">-- Select Category --</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Transportation">Transportation</option>
+                                    <option value="Housing">Housing</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Utilities">Utilities</option>
+                                    <option value="Healthcare">Healthcare</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('category')}"
+                                     th:errors="*{category}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="monthlyLimit" class="form-label">Monthly Limit ($)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="monthlyLimit"
+                                           th:field="*{monthlyLimit}" step="0.01" min="0.01"
+                                           placeholder="0.00">
+                                </div>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('monthlyLimit')}"
+                                     th:errors="*{monthlyLimit}"></div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-save me-2"></i>Save Budget
+                            </button>
+                        </form>
+                        <p class="text-muted small mt-2 mb-0">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Setting a budget for a category that already has one will update it.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Budget Progress Table -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar me-2"></i>Budget Progress This Month
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${budgetProgress.empty}" class="alert alert-info mb-0">
+                            <i class="fas fa-info-circle me-2"></i>No budgets set for this month yet. Use the form to add one.
+                        </div>
+
+                        <div th:unless="${budgetProgress.empty}">
+                            <div th:each="bp : ${budgetProgress}" class="mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="fw-semibold" th:text="${bp.category}">Category</span>
+                                    <div class="text-end">
+                                        <span class="text-muted small">
+                                            $<span th:text="${#numbers.formatDecimal(bp.spent, 1, 2)}">0.00</span>
+                                            &nbsp;/&nbsp;
+                                            $<span th:text="${#numbers.formatDecimal(bp.limit, 1, 2)}">0.00</span>
+                                        </span>
+                                        <span th:class="${'ms-2 badge ' + (bp.percentage >= 100 ? 'bg-danger' : (bp.percentage >= 75 ? 'bg-warning text-dark' : 'bg-success'))}"
+                                              th:text="${bp.percentage + '%'}">0%</span>
+                                    </div>
+                                </div>
+                                <div class="progress" style="height: 12px;">
+                                    <div class="progress-bar"
+                                         th:classappend="${bp.percentage >= 100 ? 'bg-danger' : (bp.percentage >= 75 ? 'bg-warning' : 'bg-success')}"
+                                         role="progressbar"
+                                         th:style="'width: ' + ${bp.percentage} + '%'"
+                                         th:attr="aria-valuenow=${bp.percentage}"
+                                         aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-1">
+                                    <span class="text-muted small">
+                                        Remaining: $<span th:text="${#numbers.formatDecimal(bp.limit - bp.spent > 0 ? bp.limit - bp.spent : 0, 1, 2)}">0.00</span>
+                                    </span>
+                                    <a th:href="@{/expenses/budgets/delete/{id}(id=${bp.budgetId})}"
+                                       class="text-danger small"
+                                       onclick="return confirm('Delete this budget?')">
+                                        <i class="fas fa-trash-alt"></i> Remove
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html>
