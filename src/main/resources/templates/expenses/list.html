@@ -138,55 +138,73 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            (function() {
-                var categoryLabels = /*[[${categoryTotals != null ? categoryTotals.keySet() : {}}]]*/ [];
-                var categoryValues = /*[[${categoryTotals != null ? categoryTotals.values() : {}}]]*/ [];
-                var monthlyLabels  = /*[[${monthlyTotals != null ? monthlyTotals.keySet() : {}}]]*/ [];
-                var monthlyValues  = /*[[${monthlyTotals != null ? monthlyTotals.values() : {}}]]*/ [];
-
-                var ctxD = document.getElementById('categoryChart');
-                if (ctxD && categoryLabels.length > 0) {
-                    new Chart(ctxD, {
-                        type: 'doughnut',
-                        data: {
-                            labels: categoryLabels,
-                            datasets: [{
-                                data: categoryValues,
-                                backgroundColor: [
-                                    '#3f51b5','#f50057','#ff9800','#4caf50',
-                                    '#00bcd4','#9c27b0','#ff5722','#607d8b'
-                                ]
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            plugins: { legend: { position: 'bottom' } }
-                        }
-                    });
-                }
-
-                var ctxB = document.getElementById('monthlyChart');
-                if (ctxB && monthlyLabels.length > 0) {
-                    new Chart(ctxB, {
-                        type: 'bar',
-                        data: {
-                            labels: monthlyLabels,
-                            datasets: [{
-                                label: 'Monthly Spending ($)',
-                                data: monthlyValues,
-                                backgroundColor: 'rgba(63, 81, 181, 0.7)',
-                                borderColor: '#303f9f',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            scales: { y: { beginAtZero: true } }
-                        }
-                    });
-                }
-            })();
+            var __chartData = {
+                categoryLabels: /*[[${categoryTotals != null ? categoryTotals.keySet() : {}}]]*/ [],
+                categoryValues: /*[[${categoryTotals != null ? categoryTotals.values() : {}}]]*/ [],
+                monthlyLabels:  /*[[${monthlyTotals != null ? monthlyTotals.keySet() : {}}]]*/ [],
+                monthlyValues:  /*[[${monthlyTotals != null ? monthlyTotals.values() : {}}]]*/ []
+            };
             /*]]>*/
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                function initCharts() {
+                    var d = __chartData;
+
+                    var ctxD = document.getElementById('categoryChart');
+                    if (ctxD && d.categoryLabels.length > 0) {
+                        new Chart(ctxD, {
+                            type: 'doughnut',
+                            data: {
+                                labels: d.categoryLabels,
+                                datasets: [{
+                                    data: d.categoryValues,
+                                    backgroundColor: [
+                                        '#3f51b5','#f50057','#ff9800','#4caf50',
+                                        '#00bcd4','#9c27b0','#ff5722','#607d8b'
+                                    ]
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: { legend: { position: 'bottom' } }
+                            }
+                        });
+                    }
+
+                    var ctxB = document.getElementById('monthlyChart');
+                    if (ctxB && d.monthlyLabels.length > 0) {
+                        new Chart(ctxB, {
+                            type: 'bar',
+                            data: {
+                                labels: d.monthlyLabels,
+                                datasets: [{
+                                    label: 'Monthly Spending ($)',
+                                    data: d.monthlyValues,
+                                    backgroundColor: 'rgba(63, 81, 181, 0.7)',
+                                    borderColor: '#303f9f',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: { y: { beginAtZero: true } }
+                            }
+                        });
+                    }
+                }
+
+                if (typeof Chart !== 'undefined') {
+                    initCharts();
+                } else {
+                    var poll = setInterval(function() {
+                        if (typeof Chart !== 'undefined') {
+                            clearInterval(poll);
+                            initCharts();
+                        }
+                    }, 50);
+                }
+            });
         </script>
 
         <div th:if="${expenses.empty}" class="alert alert-info">
@@ -306,7 +324,7 @@
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
-                        <div id="aiResponseText" class="alert alert-info mb-0" style="white-space: pre-wrap;"></div>
+                        <div id="aiResponseText" class="alert alert-info mb-0"></div>
                     </div>
                 </div>
             </div>
@@ -348,7 +366,12 @@
             .then(function(data) {
                 spinner.classList.add('d-none');
                 responseText.classList.remove('d-none');
-                responseText.textContent = data.response || 'No response received.';
+                var raw = data.response || 'No response received.';
+                if (typeof marked !== 'undefined' && typeof marked.parse === 'function') {
+                    responseText.innerHTML = marked.parse(raw);
+                } else {
+                    responseText.textContent = raw;
+                }
                 askBtn.disabled = false;
             })
             .catch(function() {
