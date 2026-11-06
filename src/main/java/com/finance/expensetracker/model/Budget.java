@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Data
 @Entity
 @Table(name = "budgets",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "category", "month", "year"}))
+       uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "category", "budget_month", "budget_year"}))
 public class Budget {
 
     @Id
@@ -25,9 +25,10 @@ public class Budget {
     @Column(name = "monthly_limit", nullable = false)
     private BigDecimal monthlyLimit;
 
-    @Column(nullable = false)
+    // "month" and "year" are reserved words in H2 2.x, so use explicit column names.
+    @Column(name = "budget_month", nullable = false)
     private int month;
 
-    @Column(nullable = false)
+    @Column(name = "budget_year", nullable = false)
     private int year;
 }
